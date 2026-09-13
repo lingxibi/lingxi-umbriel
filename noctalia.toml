@@ -1,0 +1,31 @@
+# Noctalia shell — 主题/字体/壁纸,可在 Noctalia 设置面板中继续调整
+[theme]
+mode = "dark"
+source = "builtin"
+builtin = "Catppuccin"
+
+[shell]
+font_family = "JetBrainsMono Nerd Font"
+
+# 官方插件源 + 启用视频壁纸插件
+[plugins]
+enabled = ["noctalia/mpvpaper"]
+auto_update = "official"
+
+[[plugins.source]]
+name = "official"
+kind = "git"
+location = "https://github.com/noctalia-dev/official-plugins"
+enabled = true
+
+# 动态壁纸:从目录随机轮播
+[wallpaper]
+enabled = true
+fill_mode = "crop"
+directory = "/run/current-system/sw/share/backgrounds/gnome"
+
+[wallpaper.automation]
+enabled = true
+interval_seconds = 600   # 10 分钟换一张
+order = "random"
+recursive = false
