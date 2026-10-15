@@ -17,7 +17,7 @@
  ```
 - *安装有风险，请备份后再进行拷贝*
 
-- **构建*:
+- **构建**:
  ``` 
  sudo nix flake update 
  sudo nixos-rebuild-switch rebuild --flake /etc/nixos#nixos
