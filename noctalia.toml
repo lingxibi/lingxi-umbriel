@@ -1,4 +1,6 @@
-# Noctalia shell — 主题/字体/壁纸,可在 Noctalia 设置面板中继续调整
+# Noctalia v5 — 合并当前 GUI 设置的悬浮顶栏
+# 布局：启动器/截图组 · 工作区 · 音乐 · 音频可视化 | 日期时间 | 状态与控制分组
+# 配置参考：https://docs.noctalia.dev/noctalia/bar/
 [theme]
 mode = "dark"
 source = "builtin"
@@ -6,6 +8,156 @@ builtin = "Catppuccin"
 
 [shell]
 font_family = "JetBrainsMono Nerd Font"
+
+# 35px 高，1.4 倍缩放；保留胶囊分组、透明度及已有 blur 规则。
+[bar]
+order = ["default"]
+
+[bar.default]
+enabled = true
+position = "top"
+layer = "top"
+auto_hide = false
+reserve_space = true
+thickness = 35
+margin_edge = 10
+margin_ends = 12
+margin_opposite_edge = 4
+padding = 10
+widget_spacing = 6
+radius = 16
+concave_edge_corners = false
+background_opacity = 0.6599999852478504
+border = "#45475A"
+border_width = 1.0
+shadow = true
+hover_highlight = true
+font_weight = 500
+font_scale = 0.95
+color = "on_surface"
+capsule = true
+capsule_fill = "secondary"
+capsule_radius = "auto"
+capsule_thickness = 0.75
+capsule_padding = 10
+capsule_opacity = 0.35999999195337296
+start = ["group:g3", "workspaces", "media", "audio_visualizer"]
+center = ["clock"]
+end = ["tray", "group:g2", "battery", "notifications", "privacy", "group:g1"]
+capsule_foreground = "primary"
+contact_shadow = true
+scale = 1.400000013411045
+
+[[bar.default.capsule_group]]
+accordion = true
+accordion_direction = "end"
+enabled = true
+fill = "on_error"
+foreground = "primary"
+id = "g1"
+members = ["control-center", "wallpaper", "session"]
+opacity = 0.15000000596046448
+padding = 10.0
+
+[[bar.default.capsule_group]]
+accordion = true
+accordion_direction = "end"
+enabled = true
+fill = "secondary"
+foreground = "primary"
+id = "g2"
+members = ["network", "bluetooth", "volume"]
+opacity = 0.35999998450279236
+padding = 13.0
+widget_spacing = 10
+
+[[bar.default.capsule_group]]
+accordion = true
+accordion_direction = "end"
+enabled = true
+fill = "secondary"
+foreground = "primary"
+id = "g3"
+members = ["launcher", "screenshot"]
+opacity = 0.35999998450279236
+padding = 10.0
+
+[widget]
+
+[widget.launcher]
+capsule = true
+capsule_fill = "#CBA6F7"
+capsule_foreground = "#1E1E2E"
+capsule_opacity = 1.0
+
+[widget.workspaces]
+style = "regular"
+show_labels = true
+label_source = "id"
+show_all_outputs = false
+hide_when_empty = false
+pill_scale = 0.85
+active_pill_size = 1.6
+inactive_pill_size = 0.85
+focused_color = "#CBA6F7"
+occupied_color = "#89B4FA"
+empty_color = "surface_variant"
+urgent_color = "error"
+capsule_radius = 10.0
+
+[widget.media]
+capsule = true
+color = "#A6E3A1"
+hide_when_no_media = true
+hide_artist = true
+min_length = 60
+max_length = 150
+art_size = 20
+title_scroll = "on_hover"
+
+[widget.clock]
+format = "{:%m/%d  ·  %H:%M}"
+tooltip_format = "{:%Y-%m-%d  %A}"
+capsule = true
+capsule_fill = "#313244"
+color = "#CBA6F7"
+font_weight = 600
+capsule_padding = 14
+
+[widget.tray]
+capsule = true
+
+[widget.privacy]
+color = "#F9E2AF"
+hide_inactive = true
+
+[widget.network]
+color = "#89DCEB"
+show_label = false
+
+[widget.bluetooth]
+color = "#89B4FA"
+
+[widget.volume]
+color = "#F5C2E7"
+
+[widget.battery]
+capsule = true
+
+[widget.notifications]
+color = "#F9E2AF"
+
+[widget.control-center]
+capsule = true
+capsule_fill = "#313244"
+color = "#CBA6F7"
+
+[widget.audio_visualizer]
+bands = 30
+capsule = true
+capsule_fill = "on_primary"
+capsule_opacity = 0.4
+show_when_idle = true
 
 # 官方插件源 + 启用视频壁纸插件
 [plugins]

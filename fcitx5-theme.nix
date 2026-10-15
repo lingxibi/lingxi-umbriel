@@ -1,4 +1,5 @@
 # fcitx5 输入法主题:Catppuccin Mocha 圆角 + 半透明底
+# 透明底色 + Umbriel layer_rule 的 blur = 毛玻璃候选框
 { pkgs, ... }:
 let
   theme = "catppuccin-mocha-mauve";

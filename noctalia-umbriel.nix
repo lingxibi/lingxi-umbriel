@@ -58,4 +58,11 @@
   # 系统级默认配置(对所有用户生效,低于 ~/.config)
   environment.etc."xdg/umbriel/config.toml".source = ./umbriel.toml;
   environment.etc."xdg/noctalia/config.toml".source = ./noctalia.toml;
+
+  # Noctalia v5 从用户配置目录加载 TOML；为新配置建立到系统配置的链接。
+  # L 不覆盖已存在的用户文件；GUI 调整仍保存在 ~/.local/state/noctalia/。
+  systemd.user.tmpfiles.rules = [
+    "d %h/.config/noctalia 0755 - - -"
+    "L %h/.config/noctalia/config.toml - - - - /etc/xdg/noctalia/config.toml"
+  ];
 }

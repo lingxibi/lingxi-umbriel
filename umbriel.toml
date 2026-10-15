@@ -13,7 +13,7 @@ files = []
 
 [general]
 autostart = [ "noctalia" ]
-# mod_key = "Super"            # Mod in keybinds; defaults to Super (Alt when nested)
+mod_key = "Super"              # Mod 固定为 Win/Super，避免嵌套会话变成 Alt
 xwayland = true                # requires restart to change
 show_cheatsheet = true         # show keybinds overlay on startup
 focus_on_activate = false      # activation requests mark urgent without stealing focus
@@ -34,6 +34,7 @@ back_and_forth = false
 # Colors ---------------------------------------------------------------------
 
 [colors]
+shadow = "#0000007F"
 # background = "#141419F0"
 # text_primary = "#E8E8EAFF"
 # text_muted = "#8A8A92FF"
@@ -134,7 +135,6 @@ enabled = true
 softness = 10                  # 0-200, 0 = hard edge
 offset_x = 2                   # -200 to 200
 offset_y = 2
-color = "#0000007F"
 
 # Overview -------------------------------------------------------------------
 
@@ -284,26 +284,46 @@ follows_mouse = false
 [keybinds]
 # Runtime switchers can use `window-focus-warp:<id>` to move both focus and the
 # cursor. Window ids come from `umbriel windows`, so they are not static binds.
-"Mod+K" = "spawn:kitty"
-"Mod+T" = "window-toggle-floating"
-# "Mod+Shift+T" = "window-focus-switch-floating"  # 新版本已移除该动作
-"Mod+P" = "window-toggle-pinned"
-"Mod+M" = "window-toggle-maximize-to-edges"
-"Mod+Q" = "window-close"
-"Mod+Shift+Space" = "window-move-to-scratchpad"
-"Mod+Space" = "scratchpad-toggle"
-"Mod+Ctrl+Space" = "window-restore-from-scratchpad"
-"Mod+Tab" = "scratchpad-focus-next"
+"Mod+K" = { action = "spawn:kitty", repeat = false }
+"Mod+Return" = { action = "spawn:kitty", repeat = false }
+"Mod+T" = { action = "window-toggle-floating", repeat = false }
+"Mod+Shift+T" = { action = "window-focus-switch-floating", repeat = false }
+"Mod+P" = { action = "window-toggle-pinned", repeat = false }
+"Mod+M" = { action = "window-toggle-maximize-to-edges", repeat = false }
+"Mod+Q" = { action = "window-close", repeat = false }
+# Super+Space / Super+Shift+Space 留给 Fcitx5 切换输入法组。
+# 暂存窗口统一使用 S；不截获 Ctrl+Space、Shift 等输入法按键。
+"Mod+Shift+S" = { action = "window-move-to-scratchpad", repeat = false }
+"Mod+S" = { action = "scratchpad-toggle", repeat = false }
+"Mod+Ctrl+S" = { action = "window-restore-from-scratchpad", repeat = false }
+"Mod+Tab" = { action = "scratchpad-focus-next", repeat = false }
 # Scratchpads return to their original output and position after temporary output loss.
 # Add `:DP-1` to any scratchpad action to target that output from anywhere.
 # "Mod+0" = "scratchpad-toggle:DP-1"
 # "Mod+Shift+0" = "window-move-to-scratchpad:DP-1"
 # "Mod+Ctrl+0" = "window-restore-from-scratchpad:DP-1"
 # "Mod+Alt+0" = "scratchpad-focus-next:DP-1"
-"Mod+Z" = "spawn:noctalia msg panel-toggle launcher"
-"Mod+W" = "spawn:noctalia msg panel-toggle noctalia/mpvpaper:picker"
-"Mod+O" = "overview-toggle"
-# "Mod+Space" is taken above; pick a free chord for layout switching.
+"Mod+Z" = { action = "spawn:noctalia msg panel-toggle launcher", repeat = false }
+"Mod+W" = { action = "spawn:noctalia msg panel-toggle noctalia/mpvpaper:picker", repeat = false }
+"Mod+O" = { action = "overview-toggle", repeat = false }
+# 方向键负责导航；Mod+K 保留为终端，不再用于 Vim 风格的向上聚焦。
+"Mod+Left" = "window-focus-left"
+"Mod+Right" = "window-focus-right"
+"Mod+Up" = "window-focus-up"
+"Mod+Down" = "window-focus-down"
+"Alt+Tab" = { action = "window-focus-next", repeat = false }
+"Alt+Shift+Tab" = { action = "window-focus-previous", repeat = false }
+"Mod+Page_Up" = "workspace-previous"
+"Mod+Page_Down" = "workspace-next"
+"Mod+Shift+Page_Up" = "window-move-to-workspace-previous"
+"Mod+Shift+Page_Down" = "window-move-to-workspace-next"
+"Mod+Ctrl+T" = { action = "workspace-set-layout:toggle", repeat = false }
+"Mod+Ctrl+L" = { action = "spawn:noctalia msg session lock", repeat = false }
+"Mod+F2" = { action = "cheatsheet-toggle", repeat = false }
+"Mod+Ctrl+R" = { action = "config-reload", repeat = false }
+"Print" = { action = "spawn:noctalia msg screenshot-region", repeat = false }
+"Shift+Print" = { action = "spawn:noctalia msg screenshot-fullscreen", repeat = false }
+# 输入法布局切换与 XKB 键盘布局是两回事；这里只保留 XKB 示例。
 # "Mod+Shift+K" = "keyboard-layout-next"
 # Submaps can nest; entry binds should not repeat. Inspect the active layer with `umbriel submap`.
 # "Mod+R" = { action = "submap:resize", repeat = false }
@@ -331,15 +351,18 @@ follows_mouse = false
 # "Mod+Shift+C" = "window-center"
 # "Mod+Shift+T" = "workspace-set-layout:toggle"
 
-# Media and volume (see docs/user/keybinds.md#example-media-and-brightness-keys)
-# "XF86AudioRaiseVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-# "XF86AudioLowerVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-# "Mod+XF86AudioMute"   = "spawn:wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-# "XF86AudioPlay"       = "spawn:playerctl play-pause"
-# "XF86AudioNext"       = "spawn:playerctl next"
-# "XF86AudioPrev"       = "spawn:playerctl prev"
-# Controls intended to remain usable while the session is locked use the table form.
-# "XF86MonBrightnessDown" = { action = "spawn:noctalia msg brightness-down 10", allow_when_locked = true }
+# 笔记本功能键：使用已安装的 Noctalia IPC，同时显示 OSD。
+# 音量/亮度支持长按；切换类动作禁止连发，避免长按反复开关。
+"XF86AudioRaiseVolume" = { action = "spawn:noctalia msg volume-up 5", allow_when_locked = true }
+"XF86AudioLowerVolume" = { action = "spawn:noctalia msg volume-down 5", allow_when_locked = true }
+"XF86AudioMute" = { action = "spawn:noctalia msg volume-mute", repeat = false, allow_when_locked = true }
+"XF86AudioMicMute" = { action = "spawn:noctalia msg mic-mute", repeat = false, allow_when_locked = true }
+"XF86AudioPlay" = { action = "spawn:noctalia msg media toggle", repeat = false, allow_when_locked = true }
+"XF86AudioPause" = { action = "spawn:noctalia msg media pause", repeat = false, allow_when_locked = true }
+"XF86AudioNext" = { action = "spawn:noctalia msg media next", repeat = false, allow_when_locked = true }
+"XF86AudioPrev" = { action = "spawn:noctalia msg media previous", repeat = false, allow_when_locked = true }
+"XF86MonBrightnessUp" = { action = "spawn:noctalia msg brightness-up", allow_when_locked = true }
+"XF86MonBrightnessDown" = { action = "spawn:noctalia msg brightness-down", allow_when_locked = true }
 
 # Window and layer rules (see docs/user/rules.md) ---------------------------
 
